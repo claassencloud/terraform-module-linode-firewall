@@ -1,0 +1,6 @@
+private.tfvars
+.plan
+.terraform
+.DS_Store
+*.tfstate*
+.terraform.lock.hcl
