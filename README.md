@@ -34,7 +34,7 @@ No modules.
 | <a name="input_linode_firewall_label"></a> [linode\_firewall\_label](#input\_linode\_firewall\_label) | The label for the Linode firewall resource | `string` | n/a | yes |
 | <a name="input_linode_firewall_linodes"></a> [linode\_firewall\_linodes](#input\_linode\_firewall\_linodes) | A list of linodes that will use the firewall | `list(string)` | n/a | yes |
 | <a name="input_linode_firewall_outbound_policy"></a> [linode\_firewall\_outbound\_policy](#input\_linode\_firewall\_outbound\_policy) | The outbound policy for the firewall | `string` | `"ACCEPT"` | no |
-| <a name="input_linode_firewall_rules"></a> [linode\_firewall\_rules](#input\_linode\_firewall\_rules) | A map of firewall rules for the firewall resource | <pre>map(object({<br>    action   = string<br>    protocol = string<br>    ports    = string<br>    ipv4     = list(string)<br>    ipv6     = list(string)<br>  }))</pre> | n/a | yes |
+| <a name="input_linode_firewall_rules"></a> [linode\_firewall\_rules](#input\_linode\_firewall\_rules) | A map of firewall rules for the firewall resource | <pre>map(map(object({<br>    action   = string<br>    protocol = string<br>    ports    = string<br>    ipv4     = list(string)<br>    ipv6     = list(string)<br>  })))</pre> | n/a | yes |
 
 ## Outputs
 
@@ -43,10 +43,11 @@ No outputs.
 
 ## Example Usage
 ```go
-module "my-firewall" {
+module "my-firewall"
   source                  = "../terraform-module-linode-firewall"
+  linode_firewall_count   = 1
   linode_firewall_label   = "my-firewall"
-  linode_firewall_linodes = ["my-linode"]
+  linode_firewall_linodes = ["my-linode-id"]
 
   linode_firewall_rules = {
     inbound = {
